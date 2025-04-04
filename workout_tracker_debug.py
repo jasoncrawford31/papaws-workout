@@ -5,28 +5,16 @@ from datetime import date
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import os
+
 st.set_page_config(page_title="Papaw's Workout Tracker", layout="wide")
 st.write("Secrets loaded:", list(st.secrets.keys()))
-         
-
-def connect_to_gsheet():
-    try:
-        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-        creds = ServiceAccountCredentials.from_json_keyfile_dict(st.secrets["gcp_service_account"], scope)
-        client = gspread.authorize(creds)
-        sheet = client.open("Papaw’s Workout Log").sheet1
-        st.success("Connected to Google Sheets.")
-        return sheet
-    except Exception as e:
-        st.error(f"Failed to connect to Google Sheets: {e}")
-        return None
 
 def save_to_gsheet(dataframe):
     try:
         scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
         creds = ServiceAccountCredentials.from_json_keyfile_dict(st.secrets["gcp_service_account"], scope)
         client = gspread.authorize(creds)
-        sheet = client.open("Papaw’s Workout Log").sheet1
+        sheet = client.open("Papaw's Workout Log").sheet1
 
         rows = dataframe.values.tolist()
         for row in rows:
@@ -35,7 +23,8 @@ def save_to_gsheet(dataframe):
         st.success("Data saved to Google Sheets.")
     except Exception as e:
         st.error(f"Failed to connect or write to Google Sheets: {e}")
-st.title("Papaw’s Workout Tracker – Debug Version")
+
+st.title("Papaw's Workout Tracker – Debug Version")
 
 selected_day = st.selectbox("Select Workout Day", [
     "Day 1 – Chest & Triceps", "Day 2 – Back & Biceps", "Day 3 – Legs (No Lunges)",
