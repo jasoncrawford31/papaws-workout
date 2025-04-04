@@ -26,8 +26,7 @@ def save_to_gsheet(dataframe):
     if sheet:
         try:
             rows = dataframe.values.tolist()
-            for row in rows:
-    sheet.append_row(row, value_input_option="USER_ENTERED")
+            for row in rows: sheet.append_row(row, value_input_option="USER_ENTERED")
             st.success("Data saved to Google Sheets.")
         except Exception as e:
             st.error(f"Failed to save to Google Sheets: {e}")
