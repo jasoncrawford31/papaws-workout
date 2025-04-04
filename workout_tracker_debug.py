@@ -40,7 +40,7 @@ with st.expander(f"{exercise}"):
     weight = st.number_input("Weight (lbs)", value=100)
     calories = (6 * 3.5 * (body_weight / 2.2) / 200) * (reps * 2 / 60)
     exercise_data.append({
-        "Date": selected_date,
+        "Date": str(selected_date),
         "Day": selected_day,
         "Exercise": exercise,
         "Set": 1,
