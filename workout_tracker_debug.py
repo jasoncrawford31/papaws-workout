@@ -22,15 +22,19 @@ def connect_to_gsheet():
         return None
 
 def save_to_gsheet(dataframe):
-    sheet = connect_to_gsheet()
-    if sheet:
-        try:
-            rows = dataframe.values.tolist()
-            for row in rows: sheet.append_row(row, value_input_option="USER_ENTERED")
-            st.success("Data saved to Google Sheets.")
-        except Exception as e:
-            st.error(f"Failed to save to Google Sheets: {e}")
+    try:
+        scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+        creds = ServiceAccountCredentials.from_json_keyfile_dict(st.secrets["gcp_service_account"], scope)
+        client = gspread.authorize(creds)
+        sheet = client.open("Papaw’s Workout Log").sheet1
 
+        rows = dataframe.values.tolist()
+        for row in rows:
+            sheet.append_row(row, value_input_option="USER_ENTERED")
+
+        st.success("Data saved to Google Sheets.")
+    except Exception as e:
+        st.error(f"Failed to connect or write to Google Sheets: {e}")
 st.title("Papaw’s Workout Tracker – Debug Version")
 
 selected_day = st.selectbox("Select Workout Day", [
