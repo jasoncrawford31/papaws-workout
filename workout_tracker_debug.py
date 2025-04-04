@@ -5,7 +5,7 @@ from datetime import date
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import os
-st.write(Secrets loaded:" list(st.secrets.keys()))
+st.write("Secrets loaded:" list(st.secrets.keys()))
          
 
 def connect_to_gsheet():
