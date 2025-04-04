@@ -5,6 +5,7 @@ from datetime import date
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import os
+st.set_page_config(page_title="Papaw's Workout Tracker", layout="wide")
 st.write("Secrets loaded:", list(st.secrets.keys()))
          
 
@@ -30,7 +31,6 @@ def save_to_gsheet(dataframe):
         except Exception as e:
             st.error(f"Failed to save to Google Sheets: {e}")
 
-st.set_page_config(page_title="Papaw's Workout Tracker", layout="wide")
 st.title("Papaw’s Workout Tracker – Debug Version")
 
 selected_day = st.selectbox("Select Workout Day", [
